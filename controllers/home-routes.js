@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Gallery, Painting } = require('../models');
+const { Post, Comment } = require('../models');
 
 // GET all posts for homepage
 router.get('/', async (req, res) => {
@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
       include: [
         {
           model: Comment,
-          attributes: ['title', 'content', 'user_id', 'post_date'],
+          attributes: ['content', 'user_id', 'post_id'],
         },
       ],
     });
@@ -26,7 +26,26 @@ router.get('/', async (req, res) => {
   }
 });
 
-// // GET one gallery
+// GET one post
+router.get('/post/:id', async (req, res) => {
+  try {
+    const dbPostData = await Post.findByPk(req.params.id, {
+      include: [
+        {
+          model: Comment,
+          attributes: ['content', 'user_id', 'post_id'],
+        },
+      ],
+    }); 
+
+    const post = dbPostData.get({ plain: true });
+    res.render('post', { post, loggedIn: req.session.loggedIn });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
 // router.get('/gallery/:id', async (req, res) => {
 //   try {
 //     const dbGalleryData = await Gallery.findByPk(req.params.id, {
