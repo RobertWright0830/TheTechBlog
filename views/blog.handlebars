@@ -1,0 +1,28 @@
+<div class="blog">
+  <header>
+        {{blog.title}} - <span style="font-size:small">Posted by: {{user.username}} on {{format_date blog.blog_date}}</span>
+  </header>
+  <p>{{blog.content}}</p>
+  {{#if loggedIn}}
+  <section class="flex-row justify-center">
+    {{#each blog.comments as |comment|}}
+    {{> comment-details comment}}
+    {{/each}}
+  </section>
+  </div>
+  <div class="comment-entry">
+    <header>Add A Comment:</header>
+    <form action="/blog/{{blog.id}}/comment" method="POST">
+      <textarea id="comment-content" name="content" placeholder="Leave a comment..."></textarea>
+      <button type="submit">Submit</button>
+      {{!-- script to log the form action - remove later --}}
+      <script>
+        console.log('Form Action:', "/blog/{{blog.id}}/comment");
+      </script>
+
+    </form>
+    
+  </div>
+{{else}}
+<a href="/login">You must login to view comments.</a>
+{{/if}}

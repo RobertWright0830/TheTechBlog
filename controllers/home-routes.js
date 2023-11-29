@@ -1,23 +1,45 @@
 const router = require('express').Router();
-const { Post, Comment } = require('../models');
+const { Blog, Comment } = require('../models');
 
-// GET all posts for homepage
+// Submit comment
+router.post('/blog/:id/comment', async (req, res) => {
+  try {
+
+    // Log the received blog post ID
+    console.log('Received Blog Post ID:', req.params.id);
+    
+      const newComment = await Comment.create({
+      content: req.body.content,
+      user_id: req.session.user_id,
+      blog_id: req.params.id,
+      comment_date: new Date(),
+    });
+
+    // Redirect the user to the updated /blog/:id route
+    res.redirect(`/blog/${req.params.id}`);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// GET all blogs for homepage
 router.get('/', async (req, res) => {
   try {
-    const dbPostData = await Post.findAll({
+    const dbBlogData = await Blog.findAll({
       include: [
         {
           model: Comment,
-          attributes: ['content', 'user_id', 'post_id'],
+          attributes: ['content', 'user_id', 'blog_id'],
         },
       ],
     });
 
-    const posts = dbPostData.map((post) =>
-      post.get({ plain: true })
+    const blogs = dbBlogData.map((blog) =>
+      blog.get({ plain: true })
     );
     res.render('homepage', {
-      posts,
+      blogs,
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
@@ -27,63 +49,28 @@ router.get('/', async (req, res) => {
 });
 
 // GET one post
-router.get('/post/:id', async (req, res) => {
+router.get('/blog/:id', async (req, res) => {
   try {
-    const dbPostData = await Post.findByPk(req.params.id, {
+    const dbBlogData = await Blog.findByPk(req.params.id, {
       include: [
         {
           model: Comment,
-          attributes: ['content', 'user_id', 'post_id'],
+          attributes: ['content', 'user_id', 'blog_id'],
         },
       ],
     }); 
 
-    const post = dbPostData.get({ plain: true });
-    res.render('post', { post, loggedIn: req.session.loggedIn });
+    const blog = dbBlogData.get({ plain: true });
+
+// Log the template context before rendering the template
+console.log('Template Context:', { blog, loggedIn: req.session.loggedIn });
+
+    res.render('blog', { blog, loggedIn: req.session.loggedIn });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
-
-// router.get('/gallery/:id', async (req, res) => {
-//   try {
-//     const dbGalleryData = await Gallery.findByPk(req.params.id, {
-//       include: [
-//         {
-//           model: Painting,
-//           attributes: [
-//             'id',
-//             'title',
-//             'artist',
-//             'exhibition_date',
-//             'filename',
-//             'description',
-//           ],
-//         },
-//       ],
-//     });
-
-//     const gallery = dbGalleryData.get({ plain: true });
-//     res.render('gallery', { gallery, loggedIn: req.session.loggedIn });
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json(err);
-//   }
-// });
-
-// // GET one painting
-// router.get('/painting/:id', async (req, res) => {
-//   try {
-//     const dbPaintingData = await Painting.findByPk(req.params.id);
-
-//     const painting = dbPaintingData.get({ plain: true });
-//     res.render('painting', { painting, loggedIn: req.session.loggedIn });
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json(err);
-//   }
-// });
 
 // Login route
 router.get('/login', (req, res) => {
