@@ -10,6 +10,10 @@ router.post('/', async (req, res) => {
       password: req.body.password,
     });
 
+    // Automatically log in the user after signup
+    req.session.user_id = dbUserData.id;
+    req.session.loggedIn = true;
+
     req.session.save(() => {
       req.session.loggedIn = true;
 
