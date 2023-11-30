@@ -2,37 +2,45 @@
 <html lang="en">
 
 <head>
+  <!-- Set the character set and viewport for better compatibility -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Set the title of the HTML page -->
   <title>The Tech Blog</title>
+  <!-- Link to custom stylesheets for the page -->
   <link rel="stylesheet" type="text/css" href="/css/jass.css">
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
+
 <body>
-    <nav>
-        <a href="/">Home</a>
+  <!-- Navigation bar for page links -->
+  <nav>
+    <!-- Link to the homepage -->
+    <a href="/">Home</a>
 
-        
-        
-        {{#if loggedIn}}
-        <a href="/dashboard">Dashboard</a>
-        {{!-- <a id="logout" href="/">Logout</a> --}}
-        <button id="logout-btn" class="btn-no-style">Logout</button>
-        
-        
-        {{else}}
-        <a href="/login">Dashboard</a>
-        <a href="/login">Login</a>
-        {{/if}}
-    </nav>
+    <!-- Conditional rendering based on user login status -->
+    {{#if loggedIn}}
+    <!-- Link to the dashboard and a logout button -->
+    <a href="/dashboard">Dashboard</a>
+    <button id="logout-btn" class="btn-no-style">Logout</button>
+    {{else}}
+    <!-- Links to login page if not logged in -->
+    <a href="/login">Dashboard</a>
+    <a href="/login">Login</a>
+    {{/if}}
+  </nav>
 
-    <header>
-        <h1>The Tech Blog</h1>
-    </header>
+  <!-- Header section with the blog title -->
+  <header>
+    <h1>The Tech Blog</h1>
+  </header>
 
-    <main>
-        {{{body}}}
-    </main>
+  <!-- Main content section where dynamic content is injected -->
+  <main>
+    {{{body}}}
+  </main>
+
+  <!-- Conditional rendering of logout script if user is logged in -->
   {{#if loggedIn}}
   <script src="/js/logout.js"></script>
   {{/if}}

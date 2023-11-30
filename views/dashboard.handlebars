@@ -4,9 +4,12 @@
   <header>Dashboard</header>
   <p></p>
   <p></p>
- <div class="blog-entry">
+  {{#each userBlogs as |blog|}}
+    {{> blog-summary blog}}
+  {{/each}}
+  <div class="blog-entry">
     <a href="/newpost" id="newpost-btn">+ New Post</a>
   </div> 
 {{else}}
-<a href="/login">You must login to view comments.</a>
+  <a href="/login">You must login to view comments.</a>
 {{/if}}
