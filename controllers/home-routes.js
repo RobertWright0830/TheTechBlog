@@ -1,6 +1,54 @@
 const router = require('express').Router();
 const { Blog, Comment } = require('../models');
 
+// GET all user blogs for dashboard
+router.get('/dashboard', async (req, res) => {
+  try {
+
+    res.render('dashboard', {
+      loggedIn: req.session.loggedIn,
+    });
+
+   } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// GET new post form
+router.get('/newpost', async (req, res) => {
+  try {
+
+    res.render('newpost', {
+      loggedIn: req.session.loggedIn,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+// Submit new blog
+router.post('/blog', async (req, res) => {
+  try {
+
+      const newBlog = await Blog.create({
+      title: req.body.title,
+      content: req.body.content,
+      user_id: req.session.user_id,
+      blog_date: new Date(),
+    });
+
+    // Redirect the user to the dashboard route
+    res.redirect(`/dashboard`);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+
+
 // Submit comment
 router.post('/blog/:id/comment', async (req, res) => {
   try {
@@ -71,6 +119,7 @@ console.log('Template Context:', { blog, loggedIn: req.session.loggedIn });
     res.status(500).json(err);
   }
 });
+
 
 // Login route
 router.get('/login', (req, res) => {

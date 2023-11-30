@@ -1,3 +1,12 @@
-{{#each userBlogs as |blog|}}
-  {{> blog-details blog}}
-{{/each}}
+{{#if loggedIn}}
+  <p></p>
+  <p></p>
+  <header>Dashboard</header>
+  <p></p>
+  <p></p>
+ <div class="blog-entry">
+    <a href="/newpost" id="newpost-btn">+ New Post</a>
+  </div> 
+{{else}}
+<a href="/login">You must login to view comments.</a>
+{{/if}}

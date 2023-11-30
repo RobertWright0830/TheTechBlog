@@ -40,6 +40,19 @@ h4, form{
     margin: 20px;
 }
 
+#submit-btn, #login-btn, #signup-btn, #comment-btn, #delete-btn, #update-btn, #create-btn, #newpost-btn {
+    background-color: #2B1700;
+    color: #E5FFE5;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 0 auto;    
+    display: block;
+}
+
 nav {
     background-color: #2B1700;
     overflow: hidden;
@@ -56,9 +69,18 @@ nav a{
     text-decoration: none;
 }
 
-nav a:hover {
+nav a:hover, #logout-btn:hover {
     background-color: #E5FFE5;
     color: #333;
+}
+
+#logout-btn {
+    background-color: #2B1700;
+    color: #E5FFE5;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+    padding: 14px 16px;
 }
 
 .blog, .comment-entry{
@@ -109,14 +131,7 @@ input {
     padding: 10px;
 }
 
-button {
-    background-color: #2B1700;
-    color: #E5FFE5;
-    border: none;
-    cursor: pointer;
-    font-size: 25px;
-    padding: 14px 16px;
-}
+
 
 button:hover {
     background-color: #E5FFE5;

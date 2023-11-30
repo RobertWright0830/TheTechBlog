@@ -11,11 +11,15 @@
 <body>
     <nav>
         <a href="/">Home</a>
+
+        
         
         {{#if loggedIn}}
         <a href="/dashboard">Dashboard</a>
-        {{!-- <a href="/logout">Logout</a> --}}
-        <button id="logout" class="btn-no-style">Logout</button>
+        {{!-- <a id="logout" href="/">Logout</a> --}}
+        <button id="logout-btn" class="btn-no-style">Logout</button>
+        
+        
         {{else}}
         <a href="/login">Dashboard</a>
         <a href="/login">Login</a>

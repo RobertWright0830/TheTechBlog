@@ -14,7 +14,7 @@
     <header>Add A Comment:</header>
     <form action="/blog/{{blog.id}}/comment" method="POST">
       <textarea id="comment-content" name="content" placeholder="Leave a comment..."></textarea>
-      <button type="submit">Submit</button>
+      <button id="submit-btn" type="submit">Submit</button>
       {{!-- script to log the form action - remove later --}}
       <script>
         console.log('Form Action:', "/blog/{{blog.id}}/comment");

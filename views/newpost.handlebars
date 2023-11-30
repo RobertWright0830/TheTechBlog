@@ -1,0 +1,15 @@
+  {{#if loggedIn}}
+  <div class="blog-entry">
+    <header>Create New Post</header>
+    <form  action="/blog" method="POST">
+      <label for="blog-title">Title:</label>
+        <textarea id="blog-title" name="title"></textarea>
+      <label for="blog-content">Content:</label>
+        <textarea id="blog-content" name="content"></textarea>
+      <button id="submit-btn" type="submit">Submit</button>
+    </form>
+    
+  </div>
+{{else}}
+<a href="/login">You must login to post a blog.</a>
+{{/if}}
