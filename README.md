@@ -7,8 +7,7 @@
   ## Description
   This is application allows the user who writes about tech to have a CMS-style blog site to publish articles, blog posts, and share their thoughts and opinions.
 
-   [Walkthrough Video](https://drive.google.com/file/d/1GGUotO7PTBVI5wb77Rwu5dZHq_ebS4lS/view)
-   
+ 
   
   ## Table of Contents
   - [Installation](#installation)
