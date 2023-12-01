@@ -1,25 +1,25 @@
-const router = require("express").Router();
-const { Blog, Comment, User } = require("../models");
+const router = require('express').Router();
+const { Blog, Comment, User } = require('../models');
 
 // GET all blogs for homepage
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const dbBlogDataAll = await Blog.findAll({
       include: [
         {
           model: Comment,
-          attributes: ["content", "user_id", "blog_id"],
+          attributes: ['content', 'user_id', 'blog_id'],
         },
         {
           model: User,
-          attributes: ["username"],
+          attributes: ['username'],
         },
       ],
     });
 
     const blogs = dbBlogDataAll.map((blog) => blog.get({ plain: true }));
 
-    res.render("homepage", {
+    res.render('homepage', {
       blogs,
       loggedIn: req.session.loggedIn,
     });
@@ -30,24 +30,24 @@ router.get("/", async (req, res) => {
 });
 
 // GET one post
-router.get("/blog/:id", async (req, res) => {
+router.get('/blog/:id', async (req, res) => {
   try {
     const dbBlogDataOne = await Blog.findByPk(req.params.id, {
       include: [
         {
           model: Comment,
-          attributes: ["content", "blog_id", "comment_date"],
+          attributes: ['content', 'blog_id', 'comment_date'],
         },
         {
           model: User,
-          attributes: ["username"],
+          attributes: ['username'],
         },
       ],
     });
 
     const blog = dbBlogDataOne.get({ plain: true });
 
-    res.render("blogwithcomments", { blog, loggedIn: req.session.loggedIn });
+    res.render('blogwithcomments', { blog, loggedIn: req.session.loggedIn });
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -55,10 +55,10 @@ router.get("/blog/:id", async (req, res) => {
 });
 
 // Submit comment
-router.post("/blog/:id/comment", async (req, res) => {
+router.post('/blog/:id/comment', async (req, res) => {
   try {
     // Log the received blog post ID
-    console.log("Received Blog Post ID:", req.params.id);
+    console.log('Received Blog Post ID:', req.params.id);
 
     const newComment = await Comment.create({
       content: req.body.content,
@@ -76,7 +76,7 @@ router.post("/blog/:id/comment", async (req, res) => {
 });
 
 // GET all user blogs for dashboard
-router.get("/dashboard", async (req, res) => {
+router.get('/dashboard', async (req, res) => {
   try {
     const userBlogs = await Blog.findAll({
       where: {
@@ -84,7 +84,7 @@ router.get("/dashboard", async (req, res) => {
       },
     });
 
-    res.render("dashboard", {
+    res.render('dashboard', {
       userBlogs,
       loggedIn: req.session.loggedIn,
     });
@@ -95,9 +95,9 @@ router.get("/dashboard", async (req, res) => {
 });
 
 // GET new blog form
-router.get("/newpost", async (req, res) => {
+router.get('/newpost', async (req, res) => {
   try {
-    res.render("newpost", {
+    res.render('newpost', {
       loggedIn: req.session.loggedIn,
     });
   } catch (err) {
@@ -107,7 +107,7 @@ router.get("/newpost", async (req, res) => {
 });
 
 // Submit new blog
-router.post("/blog", async (req, res) => {
+router.post('/blog', async (req, res) => {
   try {
     const newBlog = await Blog.create({
       title: req.body.title,
@@ -117,7 +117,7 @@ router.post("/blog", async (req, res) => {
     });
 
     // Redirect the user to the dashboard route
-    res.redirect(`/dashboard`);
+    res.redirect('/dashboard');
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
@@ -125,12 +125,12 @@ router.post("/blog", async (req, res) => {
 });
 
 // Login route
-router.get("/login", (req, res) => {
+router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect("/");
+    res.redirect('/');
     return;
   }
-  res.render("login");
+  res.render('login');
 });
 
 module.exports = router;

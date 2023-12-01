@@ -108,12 +108,7 @@ border-style: solid;
 border-color: #2B1700;
 }
 
-/* .content {
-    padding: 20px;
-} */
-
 .login-card {
-    /* display: none; */
     width: 90%;
     margin: 0 auto;
     background-color: #E5FFE5;
@@ -121,10 +116,6 @@ border-color: #2B1700;
     margin-top: 20px;
     border: solid 4px #2B1700;
 }
-
-/* form {
-    flex-direction: column;
-} */
 
 input {
     margin-bottom: 10px;
